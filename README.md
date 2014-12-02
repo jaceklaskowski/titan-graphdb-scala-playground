@@ -32,4 +32,4 @@ You should see the following output.
     1034 [specs2.DefaultExecutionStrategy-1] INFO  com.thinkaurelius.titan.diskstorage.log.kcvs.KCVSLog  - Loaded unidentified ReadMarker start time Timepoint[1417527850370000 μs] into com.thinkaurelius.titan.diskstorage.log.kcvs.KCVSLog$MessagePuller@65664f27
     1270 [specs2.DefaultExecutionStrategy-1] INFO  com.thinkaurelius.titan.diskstorage.cassandra.thrift.CassandraThriftStoreManager  - Closed Thrift connection pooler.The test should
 
-Use http://localhost:8182/doghouse to view the graph (nodes and edges) of the Gods family.
+Use [http://localhost:8182/doghouse](http://localhost:8182/doghouse) to view the graph (nodes and edges) of the Gods family.
