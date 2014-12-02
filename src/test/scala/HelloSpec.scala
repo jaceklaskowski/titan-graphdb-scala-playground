@@ -1,30 +1,36 @@
+import com.thinkaurelius.titan.core.{TitanVertex, Cardinality, PropertyKey, TitanGraph}
+import com.tinkerpop.gremlin.process.T
+import com.tinkerpop.gremlin.scala.GremlinScala
+import com.tinkerpop.gremlin.structure.Vertex
 import org.specs2.mutable._
 
-class HelloWorldSpec extends Specification {
+class HelloSpec extends Specification with InMemoryConnect {
 
   "The test" should {
-    "connect to Titan, pull Saturn's keys out and shutdown cleanly" in {
-      import org.apache.commons.configuration.BaseConfiguration
-      val conf = new BaseConfiguration()
-      conf.setProperty("storage.backend","cassandrathrift")
-      import com.thinkaurelius.titan.core.TitanFactory
-      val g = TitanFactory.open(conf)
+    "connect to Titan database, pull out Saturn's keys and shutdown cleanly" in {
+      val g = connect()
       val isOpen = g.isOpen
       isOpen must_=== true
 
-      val saturn: com.tinkerpop.blueprints.Vertex = g.query.has("name", "saturn").vertices.iterator.next()
+      val gs = GremlinScala(g)
 
-      import scala.collection.JavaConversions._
-      val keys = saturn.getPropertyKeys.toSet
+      (1 to 5) foreach { i ⇒
+        gs.addVertex().setProperty("name", s"vertex $i")
+      }
+      gs.addVertex("saturn", Map("name" -> "saturn"))
 
-      keys must_=== Set("name", "age")
+      gs.V.count().head must_=== 6
 
-      import com.tinkerpop.blueprints.Graph
-      import scala.collection.JavaConverters._
-      g.asInstanceOf[Graph].getVertices.asScala.toIterator.size must_=== 12
+      val traversal = gs.V.value[String]("name")
+      traversal.toList.size must_=== 6
 
-      g.shutdown
+      gs.V.has(T.label, "saturn").count().head must_=== 1
 
+      val saturnQ = gs.V.has(T.label, "saturn").head
+
+      saturnQ.property[String]("name").value must_=== "saturn"
+
+      g.close
       g.isClosed must beTrue
     }
   }
