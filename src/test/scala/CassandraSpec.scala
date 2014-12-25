@@ -44,10 +44,11 @@ class CassandraSpec extends Specification { def is = s2"""
 
       val gs = GremlinScala(g)
 
-      val n0  = gs.addVertex(label = "n0",  properties = Map("name" -> "ORac"))
-      val n1  = gs.addVertex(label = "n1",  properties = Map("name" -> "OrSO"))
-      val n11 = gs.addVertex(label = "n11", properties = Map("name" -> "ele1"))
-      val n12 = gs.addVertex(label = "n12", properties = Map("name" -> "gal1"))
+      val n0   = gs.addVertex(label = "n0",   properties = Map("name" -> "ORac"))
+      val n1   = gs.addVertex(label = "n1",   properties = Map("name" -> "OrSO"))
+      val n11  = gs.addVertex(label = "n11",  properties = Map("name" -> "ele1"))
+      val n12  = gs.addVertex(label = "n12",  properties = Map("name" -> "gal1"))
+      val n100 = gs.addVertex(label = "n100", properties = Map("name" -> "jacek", "cn" -> "device"))
 
       val e7 = n0.addEdge("e7", n11, Map.empty)
       val e8 = n0.addEdge("e8", n12, Map.empty)
