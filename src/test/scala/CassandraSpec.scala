@@ -30,16 +30,13 @@ class CassandraSpec extends Specification { def is = s2"""
       gs.V.count().head must_=== 4.toLong
       gs.close()
 
-      TitanCleanup.clear(g)
-
       success
     }
 
     def createGraph() = {
       import com.thinkaurelius.titan.core.TitanFactory
       val g = TitanFactory.build()
-        .set("storage.backend", "cassandra")
-        .set("storage.hostname", "127.0.0.1")
+        .set("storage.backend", "inmemory")
         .open()
 
       val gs = GremlinScala(g)
