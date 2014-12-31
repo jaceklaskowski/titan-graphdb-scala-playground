@@ -14,3 +14,15 @@ object Library {
   val titanCore      = "com.thinkaurelius.titan" %  "titan-core"      % Version.titan
   val titanEs        = "com.thinkaurelius.titan" %  "titan-es"        % Version.titan
 }
+
+object Dependencies {
+  import Library._
+
+  val libraries = Seq(
+    gremlinScala,
+    titanCassandra,
+    titanCore,
+    titanEs,
+    specs2Core % "test"
+  )
+}
